@@ -1,7 +1,15 @@
+// App.js
 import React, { useState } from 'react';
+import WelcomeScreen from './Welcome';
 import logo from './Picture1.png';
 
 function App() {
+  const [showWelcomeScreen, setShowWelcomeScreen] = useState(true);
+
+  const handleStartClick = () => {
+    setShowWelcomeScreen(false);
+  };
+
   const [isHovered, setIsHovered] = useState(false);
   const [isOption1Hovered, setIsOption1Hovered] = useState(false);
   const [isOption2Hovered, setIsOption2Hovered] = useState(false);
@@ -42,7 +50,7 @@ function App() {
     width: 'auto',
     height: '180px',
     overflow: 'hidden',
-    boxShadow: isHovered ? '0 0 10px rgba(0, 128, 0, 0.3)' : 'none', // Green shadow color
+    boxShadow: isHovered ? '0 0 10px rgba(0, 128, 0, 0.3)' : 'none',
     transition: 'transform 0.3s',
     transform: isHovered ? 'scale(1.2)' : 'scale(1)',
     marginBottom: '30px',
@@ -65,77 +73,84 @@ function App() {
   const optionsContainerStyle = {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'flex-start', // Align option text to the left
-    marginTop: '30px', // Adjusted margin to close the gap
+    alignItems: 'flex-start',
+    marginTop: '30px',
   };
 
   const optionStyle = {
     fontWeight: 'bold',
     fontSize: '22px',
     marginBottom: '40px',
-    transition: 'transform 0.3s, font-size 0.3s, color 0.3s', // Corrected the typo here
+    transition: 'transform 0.3s, font-size 0.3s, color 0.3s',
     cursor: 'pointer',
   };
 
   const optionHoverStyle = {
     fontSize: '26px',
-    color: '#006400', // Dark green color when hovered
+    color: '#006400',
   };
 
   return (
-    <div className="App" style={containerStyle}>
-      <div
-        style={leftSideStyle}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        <img src={logo} alt="Logo" style={logoStyle} />
-        <div style={optionsContainerStyle}>
+    <div className="App">
+      {showWelcomeScreen ? (
+        <WelcomeScreen onStartClick={handleStartClick} />
+      ) : (
+        <div className="App" style={containerStyle}>
           <div
-            style={{
-              ...optionStyle,
-              ...(isOption1Hovered && optionHoverStyle),
-            }}
-            onMouseEnter={() => setIsOption1Hovered(true)}
-            onMouseLeave={() => setIsOption1Hovered(false)}
+            style={leftSideStyle}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
           >
-            Option 1
+            <img src={logo} alt="Logo" style={logoStyle} />
+            <div style={optionsContainerStyle}>
+              <div
+                style={{
+                  ...optionStyle,
+                  ...(isOption1Hovered && optionHoverStyle),
+                }}
+                onMouseEnter={() => setIsOption1Hovered(true)}
+                onMouseLeave={() => setIsOption1Hovered(false)}
+              >
+                Home
+              </div>
+              <div
+                style={{
+                  ...optionStyle,
+                  ...(isOption2Hovered && optionHoverStyle),
+                }}
+                onMouseEnter={() => setIsOption2Hovered(true)}
+                onMouseLeave={() => setIsOption2Hovered(false)}
+              >
+                Dashboard
+              </div>
+              <div
+                style={{
+                  ...optionStyle,
+                  ...(isOption3Hovered && optionHoverStyle),
+                }}
+                onMouseEnter={() => setIsOption3Hovered(true)}
+                onMouseLeave={() => setIsOption3Hovered(false)}
+              >
+                About Us
+              </div>
+              <div
+  style={{
+    ...optionStyle,
+    ...(isOption4Hovered && optionHoverStyle),
+  }}
+  onMouseEnter={() => setIsOption4Hovered(true)}
+  onMouseLeave={() => setIsOption4Hovered(false)}
+>
+  Contact Us
+</div>
+
+            </div>
           </div>
-          <div
-            style={{
-              ...optionStyle,
-              ...(isOption2Hovered && optionHoverStyle),
-            }}
-            onMouseEnter={() => setIsOption2Hovered(true)}
-            onMouseLeave={() => setIsOption2Hovered(false)}
-          >
-            Option 2
-          </div>
-          <div
-            style={{
-              ...optionStyle,
-              ...(isOption3Hovered && optionHoverStyle),
-            }}
-            onMouseEnter={() => setIsOption3Hovered(true)}
-            onMouseLeave={() => setIsOption3Hovered(false)}
-          >
-            Option 3
-          </div>
-          <div
-            style={{
-              ...optionStyle,
-              ...(isOption4Hovered && optionHoverStyle),
-            }}
-            onMouseEnter={() => setIsOption4Hovered(true)}
-            onMouseLeave={() => setIsOption4Hovered(false)}
-          >
-            Option 4
+          <div style={rightSideStyle}>
+            <div style={overlayStyle}></div>
           </div>
         </div>
-      </div>
-      <div style={rightSideStyle}>
-        <div style={overlayStyle}></div>
-      </div>
+      )}
     </div>
   );
 }
